@@ -1,0 +1,4 @@
+name: MPS
+main: mps.hawks.project.Main
+version: 1.0
+commands:
