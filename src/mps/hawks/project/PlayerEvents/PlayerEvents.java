@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,6 +48,10 @@ public class PlayerEvents implements Listener {
 	
 	@EventHandler
 	public void towerLocationSelector(PlayerInteractEvent e) {
+		if(e.getPlayer().getGameMode() != GameMode.ADVENTURE) {
+			return;
+		}
+		
 		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			selectedLocation.put(e.getPlayer(), e.getClickedBlock().getLocation());
 			
@@ -77,7 +82,6 @@ public class PlayerEvents implements Listener {
 			new ArrowTower(p, selectedLocation.get(p));
 		}
 		
-		
 		p.closeInventory();
 	}
 	
@@ -88,7 +92,10 @@ public class PlayerEvents implements Listener {
 		ItemStack towerItem = new ItemStack(Material.FENCE);
 		ItemMeta towerMeta = towerItem.getItemMeta();
 		towerMeta.setDisplayName(ChatColor.GOLD + "Arrow Tower");
-		List<String> lore = towerMeta.getLore();
+		List<String> lore = new ArrayList<String>();
+		if(towerMeta.hasLore()) {
+			lore = towerMeta.getLore();
+		}
 		lore.add(ChatColor.GRAY + "Fast, but not so powerfull");
 		lore.add(ChatColor.GRAY + "Cost: " + ChatColor.GOLD + "10 gold");
 		towerMeta.setLore(lore);

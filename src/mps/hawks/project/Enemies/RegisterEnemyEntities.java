@@ -3,11 +3,12 @@ package mps.hawks.project.Enemies;
 import java.lang.reflect.Field;
 import java.util.Set;
 import org.bukkit.entity.EntityType;
+
+import mps.hawks.project.Enemies.EnemyTypes.EnemyTypesModels.PigZombie;
 import net.minecraft.server.v1_12_R1.EntityPigZombie;
 import net.minecraft.server.v1_12_R1.EntityTypes;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 import net.minecraft.server.v1_12_R1.RegistryMaterials;
-import mps.hawks.project.Enemies.EnemyTypes.EnemyTypesModels.PigZombie;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public enum RegisterEnemyEntities

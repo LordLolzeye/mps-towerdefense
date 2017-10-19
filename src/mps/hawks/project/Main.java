@@ -2,7 +2,11 @@ package mps.hawks.project;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,11 +35,38 @@ public class Main extends JavaPlugin {
 	    pm.registerEvents(new EnemyEvents(this), this);
 	    pm.registerEvents(new PlayerEvents(this), this);
 	    pm.registerEvents(new TowerEvents(this), this);
+	    
+	    
     }
 
     @Override
     public void onDisable() {
     	RegisterEnemyEntities.unregisterEntities();
+    	
+    	// Remove spawned entities
+    	for(UUID key : EnemyEvents.aliveEntities.keySet()) {
+    		if(!EnemyEvents.aliveEntities.get(key).isDead()) {
+    			EnemyEvents.aliveEntities.get(key).remove();
+    			
+    			EnemyEvents.aliveEntities.remove(key);
+    		}
+    	}
+    	
+    	// Remove created turrets
+    	for(Player p : playerTowers.keySet()) {
+    		ArrayList<Tower> currentPlayerTowers = playerTowers.get(p);
+    		
+    		for(Tower t : currentPlayerTowers) {
+    			for(Location l : t.towerBlocks) {
+    				l.getBlock().setType(Material.AIR);
+    			}
+    		}
+    	}
+
+    	for(Player p : Bukkit.getOnlinePlayers()) {
+    		p.kickPlayer("[MPS] Server is shutting down!");
+    	}
+    	
     }
 	
 }

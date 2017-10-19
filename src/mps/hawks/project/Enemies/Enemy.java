@@ -1,5 +1,9 @@
 package mps.hawks.project.Enemies;
 
-public class Enemy {
+import org.bukkit.Location;
 
+public abstract class Enemy {
+
+	public abstract void spawn(Location spawnLoc, int difficultyLevel);
+	
 }

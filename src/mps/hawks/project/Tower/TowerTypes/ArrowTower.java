@@ -75,8 +75,12 @@ public class ArrowTower extends Tower {
 	@Override
 	public void constructTower(Player p, Location loc) {		
 		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.MOSSY_COBBLESTONE);
-		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 2, 0).getY(), loc.add(0, 0, 0).getZ()), Material.MOSSY_COBBLESTONE);
-		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 3, 0).getY(), loc.add(0, 0, 0).getZ()), Material.ANVIL);
+		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.MOSSY_COBBLESTONE);
+		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.ANVIL);
+		
+		for(Location tbp : towerBlockPositions.keySet()) {
+			towerBlocks.add(tbp);
+		}
 		
 		for(Location key : towerBlockPositions.keySet()) {
 			Material toPlace = towerBlockPositions.get(key);
@@ -101,9 +105,8 @@ public class ArrowTower extends Tower {
 	}
 
 	@Override
-	public boolean shootProjectile(Location toLocation, Projectile projectileType) {
-		// TODO Auto-generated method stub
-		return false;
+	public void shootProjectile(Location toLocation, Projectile projectileType) {
+		projectileType.shootProjectile(towerLocation, toLocation);
 	}
 
 }

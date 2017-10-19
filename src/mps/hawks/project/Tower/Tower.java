@@ -1,5 +1,7 @@
 package mps.hawks.project.Tower;
 
+import java.util.ArrayList;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -14,6 +16,8 @@ public abstract class Tower {
 	public Player towerOwner = null;
 	public Projectile launchable = null;
 	
+	public ArrayList<Location> towerBlocks = new ArrayList<Location>();
+	
 	public Tower(Player towerOwner, Location towerSpawnLocation) {
 		this.towerLocation = towerSpawnLocation;
 		this.towerOwner = towerOwner;
@@ -25,5 +29,5 @@ public abstract class Tower {
 	public abstract void constructTower(Player p, Location loc);
 	public abstract void destructTower();
 	
-	public abstract boolean shootProjectile(Location toLocation, Projectile projectileType);
+	public abstract void shootProjectile(Location toLocation, Projectile projectileType);
 }
