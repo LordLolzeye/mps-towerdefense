@@ -12,6 +12,7 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 	private double speed;
 	private int currentIndex;
 	public Entity entity;
+	private boolean hasGoal;
 	private Object navigation;
 	private Location achieveLocation;
 	private ReflectUtil.RefClass netEntityReflect = ReflectUtil.getRefClass("{nms}.EntityInsentient");
@@ -25,6 +26,7 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 		this.achieveLocation = EnemyEvents.enemyRoute.get(currentIndex); 
 		this.navigation = this.netEntityReflect.findMethod(new ReflectUtil.MethodCondition[] { new ReflectUtil.MethodCondition().withName("getNavigation") }).of(this.netEntityReflect.getRealClass().cast(entity)).call(new Object[0]);
 		this.speed = speed;
+		this.hasGoal = true;
 	}
 
 	@Override
@@ -33,23 +35,30 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 				((Double)this.netEntityReflect.getField("locY").of(this.entity).get()).doubleValue(), 
 				((Double)this.netEntityReflect.getField("locZ").of(this.entity).get()).doubleValue());
 		
-		eLoc = eLoc.getBlock().getLocation();
-		
-		if(eLoc.distance(EnemyEvents.enemyRoute.get(currentIndex + 1)) < 0.8 ) {
-			this.achieveLocation = EnemyEvents.enemyRoute.get(currentIndex + 1);
-			currentIndex++;
+		if(!this.hasGoal) {
+			eLoc = eLoc.getBlock().getLocation();
+			
+			if(EnemyEvents.enemyRoute.size() > currentIndex + 1) {
+				this.achieveLocation = EnemyEvents.enemyRoute.get(currentIndex + 1);
+
+				currentIndex++;
+			}
 			
 			return true;
+		} else if(eLoc.distance(this.achieveLocation) < 1.4) {
+			this.hasGoal = false;
+			
+			return false;
 		}
-		
 		return false;
 	}
 
 	@Override
 	public void e()
 	{
+		this.hasGoal = true;
+		
 		Location toLoc = this.achieveLocation;
-		System.out.println("Current achievement is " + toLoc);
 		Object pathEntity = this.navReflect.findMethod(new ReflectUtil.MethodCondition[] { new ReflectUtil.MethodCondition().withName("a").withTypes(new Object[] { Double.TYPE, Double.TYPE, Double.TYPE }) })
 				.of(this.navReflect.getRealClass().cast(this.navigation)).call(new Object[] { Double.valueOf(toLoc.getX()), Double.valueOf(toLoc.getY()), Double.valueOf(toLoc.getZ()) });
 
