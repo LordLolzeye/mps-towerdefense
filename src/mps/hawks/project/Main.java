@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import mps.hawks.project.Enemies.EnemyEvents;
 import mps.hawks.project.Enemies.RegisterEnemyEntities;
 import mps.hawks.project.PlayerEvents.PlayerEvents;
+import mps.hawks.project.Projectile.ProjectileEvents;
 import mps.hawks.project.Tower.Tower;
 import mps.hawks.project.Tower.TowerEvents;
 
@@ -35,8 +36,7 @@ public class Main extends JavaPlugin {
 	    pm.registerEvents(new EnemyEvents(this), this);
 	    pm.registerEvents(new PlayerEvents(this), this);
 	    pm.registerEvents(new TowerEvents(this), this);
-	    
-	    
+	    pm.registerEvents(new ProjectileEvents(this), this);
     }
 
     @Override

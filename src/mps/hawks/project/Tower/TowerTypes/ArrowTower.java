@@ -6,9 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import mps.hawks.project.Main;
 import mps.hawks.project.Projectile.Projectile;
+import mps.hawks.project.Projectile.ProjectileTypes.Arrow;
 import mps.hawks.project.Tower.Tower;
 import net.md_5.bungee.api.ChatColor;
 
@@ -23,7 +25,9 @@ public class ArrowTower extends Tower {
 		towerConstructionCost = 10;
 		towerUpgradeCost = 20;
 		currentUpgradeLevel = 1;
+		currentDamage = 10;
 		blockRadius = 7; // can attack at max 7 blocks (xyz)
+		launchable = new Arrow();
 		
 		if(Main.self.playerMoney.containsKey(towerOwner)) {
 			if(Main.self.playerMoney.get(towerOwner) >= towerConstructionCost) {
@@ -106,7 +110,19 @@ public class ArrowTower extends Tower {
 
 	@Override
 	public void shootProjectile(Location toLocation, Projectile projectileType) {
-		projectileType.shootProjectile(towerLocation, toLocation);
+		if(canShootProjectile) {
+			towerProjectiles.add(projectileType.shootProjectile(towerLocation.clone().add(0, 1, 0), toLocation));
+			canShootProjectile = false;
+			
+			new BukkitRunnable() {
+				
+				@Override
+				public void run() {
+					canShootProjectile = true;	
+				}
+				
+			}.runTaskLaterAsynchronously(Main.self, 40);
+		}
 	}
 
 }

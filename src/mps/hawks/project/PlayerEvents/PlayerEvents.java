@@ -38,6 +38,9 @@ public class PlayerEvents implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		this.plugin.playerMoney.put(e.getPlayer(), 30);
 		this.plugin.playerTowers.put(e.getPlayer(), new ArrayList<Tower>());
+		
+		e.getPlayer().setHealth(20);
+		e.getPlayer().setSaturation(20);
 	}
 	
 	@EventHandler

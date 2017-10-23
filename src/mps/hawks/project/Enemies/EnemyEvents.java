@@ -21,6 +21,7 @@ public class EnemyEvents implements Listener {
 	public Main plugin;
 
 	public static HashMap<UUID, Entity> aliveEntities = new HashMap<UUID, Entity>();
+	public static HashMap<UUID, Integer> aliveEntitiesHealth = new HashMap<UUID, Integer>();
 	public static Location spawnLocation = new Location(Bukkit.getWorld("world"), -852.5, 4.0, -1207.5);
 	public static ArrayList<Location> enemyRoute = new ArrayList<Location>();
 
@@ -54,7 +55,6 @@ public class EnemyEvents implements Listener {
 								
 								@Override
 								public void run() {
-									System.out.println("spawning pig zombie entity");
 									new PigZombieEnemy().spawn(spawnLocation, difficultyLevel);
 								}
 								
@@ -67,7 +67,7 @@ public class EnemyEvents implements Listener {
 				}
 			}
 
-		}.runTaskTimerAsynchronously(plugin, 600, 1800);
+		}.runTaskTimerAsynchronously(plugin, 100, 1800);
 	}
 
 	@EventHandler
@@ -77,6 +77,7 @@ public class EnemyEvents implements Listener {
 		}
 
 		aliveEntities.put(e.getEntity().getUniqueId(), e.getEntity());
+		aliveEntitiesHealth.put(e.getEntity().getUniqueId(), 20);
 	}
 
 	@EventHandler
@@ -87,7 +88,7 @@ public class EnemyEvents implements Listener {
 
 		if(aliveEntities.containsKey(e.getEntity().getUniqueId())) {
 			aliveEntities.remove(e.getEntity().getUniqueId());
+			aliveEntitiesHealth.remove(e.getEntity().getUniqueId());
 		}
 	}
-
 }
