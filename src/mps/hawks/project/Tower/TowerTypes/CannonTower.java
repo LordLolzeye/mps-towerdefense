@@ -10,23 +10,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import mps.hawks.project.Main;
 import mps.hawks.project.Projectile.Projectile;
-import mps.hawks.project.Projectile.ProjectileTypes.Arrow;
+import mps.hawks.project.Projectile.ProjectileTypes.Fireball;
 import mps.hawks.project.Tower.Tower;
 import net.md_5.bungee.api.ChatColor;
 
-public class ArrowTower extends Tower {
+public class CannonTower extends Tower {
 	private HashMap<Location, Material> towerBlockPositions = new HashMap<Location , Material>();
 	
 	public int currentUpgradeLevel;
+	public int timeMultiplier = 5;
 	
-	public ArrowTower(Player owner, Location towerSpawnLocation) {
+	public CannonTower(Player owner, Location towerSpawnLocation) {
 		super(owner, towerSpawnLocation);
 		
-		towerConstructionCost = 10;
+		towerConstructionCost = 15;
 		currentUpgradeLevel = 1;
-		currentDamage = 10;
-		blockRadius = 7; // can attack at max 7 blocks (xyz)
-		launchable = new Arrow();
+		currentDamage = 20;
+		blockRadius = 3; 
+		launchable = new Fireball();
 		
 		if(Main.self.playerMoney.containsKey(towerOwner)) {
 			if(Main.self.playerMoney.get(towerOwner) >= towerConstructionCost) {
@@ -38,8 +39,9 @@ public class ArrowTower extends Tower {
 			}
 		}
 		
-		possibleUpgrades.put(2, 20); // arrow damage
-		possibleUpgrades.put(3, 15); // range
+		possibleUpgrades.put(1, 30); // speed
+		possibleUpgrades.put(2, 20); // damage
+		possibleUpgrades.put(3, 50); // range
 	}
 
 	@Override
@@ -56,12 +58,13 @@ public class ArrowTower extends Tower {
 		
 		switch(upgradeId) {
 		case 1:
+			timeMultiplier -= 1;
 			break;
 		case 2:
-				currentDamage += 2;
+			currentDamage += 2;
 			break;
 		case 3:
-				blockRadius++;
+			blockRadius++;
 			break;
 		}
 		
@@ -69,10 +72,10 @@ public class ArrowTower extends Tower {
 	}
 
 	@Override
-	public void constructTower(Player p, Location loc) {		
-		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.MOSSY_COBBLESTONE);
-		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.MOSSY_COBBLESTONE);
-		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.ANVIL);
+	public void constructTower(Player p, Location loc) {	
+		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.IRON_BLOCK);
+		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.IRON_BLOCK);
+		towerBlockPositions.put(new Location(Bukkit.getWorld("world"), loc.add(0, 0, 0).getX(), loc.add(0, 1, 0).getY(), loc.add(0, 0, 0).getZ()), Material.SAPLING);
 		
 		for(Location tbp : towerBlockPositions.keySet()) {
 			towerBlocks.add(tbp);
@@ -113,7 +116,7 @@ public class ArrowTower extends Tower {
 					canShootProjectile = true;	
 				}
 				
-			}.runTaskLaterAsynchronously(Main.self, 40);
+			}.runTaskLaterAsynchronously(Main.self, 40 * timeMultiplier);
 		}
 	}
 

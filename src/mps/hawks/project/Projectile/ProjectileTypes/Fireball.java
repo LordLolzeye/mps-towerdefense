@@ -6,7 +6,7 @@ import org.bukkit.util.Vector;
 
 import mps.hawks.project.Projectile.Projectile;
 
-public class Arrow extends Projectile {
+public class Fireball extends Projectile {
 	public Entity shootProjectile(Location fromLoc, Location toLoc) {
 		Vector vector = toLoc.toVector().subtract(fromLoc.toVector());
 		

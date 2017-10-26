@@ -1,6 +1,7 @@
 package mps.hawks.project.Tower;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -21,14 +22,14 @@ public abstract class Tower {
 	
 	public ArrayList<Location> towerBlocks = new ArrayList<Location>();
 	public ArrayList<Entity> towerProjectiles = new ArrayList<Entity>();
+	public HashMap<Integer, Integer> possibleUpgrades = new HashMap<Integer, Integer>();
 	
 	public Tower(Player towerOwner, Location towerSpawnLocation) {
 		this.towerLocation = towerSpawnLocation;
 		this.towerOwner = towerOwner;
 	}
 	
-	public abstract boolean canUpgradeTower();
-	public abstract void upgradeTower();
+	public abstract void upgradeTower(int upgradeId);
 	
 	public abstract void constructTower(Player p, Location loc);
 	public abstract void destructTower();

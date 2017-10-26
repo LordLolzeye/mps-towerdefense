@@ -23,6 +23,7 @@ public class Main extends JavaPlugin {
 	public HashMap<Player, Integer> playerMoney = new HashMap<Player, Integer>();
 	public HashMap<Player, ArrayList<Tower>> playerTowers = new HashMap<Player, ArrayList<Tower>>();
 	public static Main self;
+	public static int remainingLives = 10;
 	
 	@Override
     public void onEnable() {

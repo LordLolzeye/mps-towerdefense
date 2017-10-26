@@ -4,18 +4,19 @@ import com.google.common.collect.Sets;
 import mps.hawks.project.Enemies.EnemyTypes.PathFinderGoals.PathfinderGoalWalkToFinish;
 
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_12_R1.EntityPigZombie;
+
+import net.minecraft.server.v1_12_R1.EntitySkeleton;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 
-public class PigZombie extends EntityPigZombie {
+public class Skeleton extends EntitySkeleton {
 	public double attackDmg;
 	public double health;
 	public double speed;
 
-	public PigZombie(World world, double atDmg, double hp, double entitySpeed, Location spawnLocation)
+	public Skeleton(World world, double atDmg, double hp, double entitySpeed, Location spawnLocation)
 	{
 		super(world);
 		try
@@ -47,4 +48,8 @@ public class PigZombie extends EntityPigZombie {
 		
 		getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(15.0D);
 	}
+	
+	@Override
+	public void setOnFire(int i) {}
+	
 }

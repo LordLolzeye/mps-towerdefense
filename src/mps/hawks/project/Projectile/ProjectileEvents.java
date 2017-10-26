@@ -29,7 +29,6 @@ public class ProjectileEvents implements Listener {
 					if(proj.getUniqueId().equals(e.getDamager().getUniqueId())) {
 						int currentEntityHealth = EnemyEvents.aliveEntitiesHealth.get(e.getEntity().getUniqueId());
 						
-						System.out.println(currentEntityHealth);
 						if(currentEntityHealth - t.currentDamage > 0) {
 							EnemyEvents.aliveEntitiesHealth.put(e.getEntity().getUniqueId(), currentEntityHealth - t.currentDamage);
 						} else {
@@ -52,9 +51,6 @@ public class ProjectileEvents implements Listener {
 				}
 			}
 		}
-		
-		System.out.println(e.getEntityType());
-		System.out.println(e.getDamager());
 	}
 
 }

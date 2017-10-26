@@ -2,6 +2,10 @@ package mps.hawks.project.Enemies.EnemyTypes.PathFinderGoals;
 
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.PathfinderGoal;
+
+import java.util.Random;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import mps.hawks.project.Enemies.EnemyEvents;
@@ -45,11 +49,23 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 			}
 			
 			return true;
-		} else if(eLoc.distance(this.achieveLocation) < 1.4) {
+		} else if(eLoc.distance(new Location(Bukkit.getWorld("world"), -851, 4, -1193)) < 2 && !this.achieveLocation.equals(EnemyEvents.enemyRoute.get(EnemyEvents.enemyRoute.size() - 1))){
+			this.hasGoal = false;
+			
+			return false;
+		} else if(this.achieveLocation.equals(EnemyEvents.enemyRoute.get(EnemyEvents.enemyRoute.size() - 1))) {
+			Random r = new Random();
+			if(r.nextInt(100) % 8 == 7) {
+				return true;
+			}
+			
+			return false;
+		} else if(eLoc.distance(this.achieveLocation) < 1) {
 			this.hasGoal = false;
 			
 			return false;
 		}
+		
 		return false;
 	}
 
@@ -57,8 +73,8 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 	public void e()
 	{
 		this.hasGoal = true;
-		
 		Location toLoc = this.achieveLocation;
+		
 		Object pathEntity = this.navReflect.findMethod(new ReflectUtil.MethodCondition[] { new ReflectUtil.MethodCondition().withName("a").withTypes(new Object[] { Double.TYPE, Double.TYPE, Double.TYPE }) })
 				.of(this.navReflect.getRealClass().cast(this.navigation)).call(new Object[] { Double.valueOf(toLoc.getX()), Double.valueOf(toLoc.getY()), Double.valueOf(toLoc.getZ()) });
 

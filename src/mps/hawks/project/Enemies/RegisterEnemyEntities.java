@@ -5,7 +5,11 @@ import java.util.Set;
 import org.bukkit.entity.EntityType;
 
 import mps.hawks.project.Enemies.EnemyTypes.EnemyTypesModels.PigZombie;
+import mps.hawks.project.Enemies.EnemyTypes.EnemyTypesModels.Creeper;
+import mps.hawks.project.Enemies.EnemyTypes.EnemyTypesModels.Skeleton;
 import net.minecraft.server.v1_12_R1.EntityPigZombie;
+import net.minecraft.server.v1_12_R1.EntitySkeleton;
+import net.minecraft.server.v1_12_R1.EntityCreeper;
 import net.minecraft.server.v1_12_R1.EntityTypes;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 import net.minecraft.server.v1_12_R1.RegistryMaterials;
@@ -13,7 +17,9 @@ import net.minecraft.server.v1_12_R1.RegistryMaterials;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public enum RegisterEnemyEntities
 {
-	PIGZOMBIE("PigZombie", 57, EntityType.PIG_ZOMBIE, EntityPigZombie.class, PigZombie.class);
+	PIGZOMBIE("PigZombie", 57, EntityType.PIG_ZOMBIE, EntityPigZombie.class, PigZombie.class),
+	SKELETON("Skeleton", 51, EntityType.SKELETON, EntitySkeleton.class, Skeleton.class),
+	CREEPER("Creeper", 50, EntityType.CREEPER, EntityCreeper.class, Creeper.class);
 
 	private String name;
 	private int id;

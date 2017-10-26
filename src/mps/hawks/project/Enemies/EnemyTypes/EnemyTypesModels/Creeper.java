@@ -4,18 +4,19 @@ import com.google.common.collect.Sets;
 import mps.hawks.project.Enemies.EnemyTypes.PathFinderGoals.PathfinderGoalWalkToFinish;
 
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_12_R1.EntityPigZombie;
+
+import net.minecraft.server.v1_12_R1.EntityCreeper;
 import net.minecraft.server.v1_12_R1.GenericAttributes;
 import net.minecraft.server.v1_12_R1.PathfinderGoalSelector;
 import net.minecraft.server.v1_12_R1.World;
 import org.bukkit.Location;
 
-public class PigZombie extends EntityPigZombie {
+public class Creeper extends EntityCreeper {
 	public double attackDmg;
 	public double health;
 	public double speed;
 
-	public PigZombie(World world, double atDmg, double hp, double entitySpeed, Location spawnLocation)
+	public Creeper(World world, double atDmg, double hp, double entitySpeed, Location spawnLocation)
 	{
 		super(world);
 		try
