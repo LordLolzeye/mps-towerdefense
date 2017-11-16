@@ -42,6 +42,13 @@ public class EnemyEvents implements Listener {
 
 		enemyRoute.add(new Location(Bukkit.getWorld("world"), -852, 4, -1207));
 		enemyRoute.add(new Location(Bukkit.getWorld("world"), -845, 4, -1207));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -838, 4, -1207));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -837, 4, -1210));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -833, 4, -1210));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -833, 4, -1205));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -833, 4, -1201));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -837, 4, -1201));
+		enemyRoute.add(new Location(Bukkit.getWorld("world"), -841, 4, -1201));
 		enemyRoute.add(new Location(Bukkit.getWorld("world"), -845, 4, -1201));
 		enemyRoute.add(new Location(Bukkit.getWorld("world"), -852, 4, -1201));
 		enemyRoute.add(new Location(Bukkit.getWorld("world"), -854, 4, -1201)); // tp spot

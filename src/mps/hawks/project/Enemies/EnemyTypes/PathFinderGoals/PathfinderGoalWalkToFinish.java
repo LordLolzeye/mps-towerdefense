@@ -16,6 +16,7 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 	private double speed;
 	private int currentIndex;
 	public Entity entity;
+	public double previousEntityX, previousEntityY, previousEntityZ;
 	private boolean hasGoal;
 	private Object navigation;
 	private Location achieveLocation;
@@ -31,6 +32,10 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 		this.navigation = this.netEntityReflect.findMethod(new ReflectUtil.MethodCondition[] { new ReflectUtil.MethodCondition().withName("getNavigation") }).of(this.netEntityReflect.getRealClass().cast(entity)).call(new Object[0]);
 		this.speed = speed;
 		this.hasGoal = true;
+		
+		this.previousEntityX = entity.locX;
+		this.previousEntityY = entity.locY;
+		this.previousEntityZ = entity.locZ;
 	}
 
 	@Override
@@ -48,14 +53,25 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 				currentIndex++;
 			}
 			
+			previousEntityX = entity.locX;
+			previousEntityY = entity.locY;
+			
 			return true;
-		} else if(eLoc.distance(new Location(Bukkit.getWorld("world"), -851, 4, -1193)) < 2 && !this.achieveLocation.equals(EnemyEvents.enemyRoute.get(EnemyEvents.enemyRoute.size() - 1))){
+		} else if(eLoc.distance(new Location(Bukkit.getWorld("world"), -851, 4, -1193)) < 2 && !this.achieveLocation.equals(EnemyEvents.enemyRoute.get(EnemyEvents.enemyRoute.size() - 1))) {
 			this.hasGoal = false;
 			
 			return false;
+		} else if (previousEntityX == entity.locX && previousEntityY == entity.locY) {
+			previousEntityX = entity.locX;
+			previousEntityY = entity.locY;
+			
+			return true;
 		} else if(this.achieveLocation.equals(EnemyEvents.enemyRoute.get(EnemyEvents.enemyRoute.size() - 1))) {
 			Random r = new Random();
 			if(r.nextInt(100) % 8 == 7) {
+				previousEntityX = entity.locX;
+				previousEntityY = entity.locY;
+				
 				return true;
 			}
 			
@@ -65,6 +81,9 @@ public class PathfinderGoalWalkToFinish extends PathfinderGoal {
 			
 			return false;
 		}
+		
+		previousEntityX = entity.locX;
+		previousEntityY = entity.locY;
 		
 		return false;
 	}
